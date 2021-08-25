@@ -1,6 +1,7 @@
 let playerWins = 0;
 let computerWins = 0;
 let rounds = 0;
+let chosenRounds = false;
 
 let computerSelection = "";
 let playerSelection = "";
@@ -12,10 +13,25 @@ function welcome(){
     startGame();
 }
 
+function chooseRounds(){
+
+    while(!chosenRounds){
+        rounds = parseInt(prompt("Best of how many rounds? (Odd numbers only)"));
+        if(rounds<10 && rounds>1 && rounds %2 !== 0){
+            console.log(rounds + " round game chosen.");
+            chosenRounds=true;
+        }
+        else{
+            console.log("Invalid input");
+        }
+    }
+    
+}
+
 function startGame(){
     
-    rounds = parseInt(prompt("How many rounds? (Uneven numbers only)"));
-    
+    chooseRounds(); 
+
     for(let i = 0; i<rounds; i++){
         computerSelection = "";
         playerSelection = "";
@@ -103,11 +119,30 @@ function calculate(){
 }
 
 function whoWon(){
+    let again = "";
+    console.log("\nPlayer: " + playerWins + " / Computer: " + computerWins);
     if(playerWins>computerWins){
         console.log("You win! Congratulations.")
     }
     else if(computerWins>playerWins){
         console.log("You lose! Better luck next time.")
+    }
+    console.log("Play another game?");
+    while(again !== "yes" && again !== "no"){  
+        again=prompt("Play another game?");
+        again=again.toLowerCase();
+    }
+    if(again === "yes"){
+        playerWins = 0;
+        computerWins = 0;
+        rounds = 0;
+        chosenRounds = false;
+        computerSelection = "";
+        playerSelection = "";
+        startGame();
+    }
+    if(again === "no"){
+        console.log("Thanks for playing.");
     }
 }
 
